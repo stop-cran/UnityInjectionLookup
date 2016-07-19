@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityInjectionLookup", "UnityInjectionLookup\UnityInjectionLookup.csproj", "{282C1E89-5015-44EC-AFC3-1FD04AE1E784}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityInjectionLookupUnitTests", "UnityInjectionLookupUnitTests\UnityInjectionLookupUnitTests.csproj", "{32C0F4FB-D34C-47EE-8D54-E60F9E91CA0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{282C1E89-5015-44EC-AFC3-1FD04AE1E784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{282C1E89-5015-44EC-AFC3-1FD04AE1E784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{282C1E89-5015-44EC-AFC3-1FD04AE1E784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{282C1E89-5015-44EC-AFC3-1FD04AE1E784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C0F4FB-D34C-47EE-8D54-E60F9E91CA0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C0F4FB-D34C-47EE-8D54-E60F9E91CA0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C0F4FB-D34C-47EE-8D54-E60F9E91CA0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C0F4FB-D34C-47EE-8D54-E60F9E91CA0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
