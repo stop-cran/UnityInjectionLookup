@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace UnityInjectionLookupUnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class FunctionHelperTests
     {
-        [TestMethod]
+        [Test]
         public void TestMethod1()
         {
         }

@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity.Utility;
+using Unity.Builder;
+using Unity.Policy;
 
 namespace UnityInjectionLookup
 {
-    class ConstructorLookupBuildPlanPolicy : IBuildPlanPolicy
+    internal class ConstructorLookupBuildPlanPolicy : IBuildPlanPolicy
     {
         private readonly IReadOnlyCollection<Type> argumentTypes;
 
         public ConstructorLookupBuildPlanPolicy(IReadOnlyCollection<Type> argumentTypes)
         {
-            Guard.ArgumentNotNull(argumentTypes, "argumentTypes");
-            this.argumentTypes = argumentTypes;
+            this.argumentTypes = argumentTypes ?? throw new ArgumentNullException(nameof(argumentTypes));
         }
 
         public void BuildUp(IBuilderContext context)
@@ -26,7 +25,7 @@ namespace UnityInjectionLookup
 
                 context.AddResolverOverrides(data.GetOverrides(arguments));
                 context.BuildKey = data.BuildKey;
-                context.Existing = context.NewBuildUp(data.BuildKey);
+                context.Existing = context.NewBuildUp(data.BuildKey.Type, data.BuildKey.Name);
                 context.BuildComplete = true;
             }
         }

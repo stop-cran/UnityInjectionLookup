@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
+using Unity;
+using Unity.Builder;
+using Unity.Lifetime;
+using Unity.Registration;
 
 namespace UnityInjectionLookup
 {
-    static class BuilderContextExtensions
+    internal static class BuilderContextExtensions
     {
-        public static IList<object> ResolveWithOverrides(this IBuilderContext context, IEnumerable<Type> typesToResolve)
-        {
-            return typesToResolve.Select(context.ResolveWithOverride).ToList();
-        }
+        public static IList<object> ResolveWithOverrides(this IBuilderContext context, IEnumerable<Type> typesToResolve) =>
+            typesToResolve.Select(context.ResolveWithOverride).ToList();
 
-        public static object ResolveWithOverride(this IBuilderContext context, Type typeToResolve)
-        {
-            return context
+        public static object ResolveWithOverride(this IBuilderContext context, Type typeToResolve) =>
+            context
                 .GetOverriddenResolver(typeToResolve)
                 ?.Resolve(context)
-                ?? context
-                    .NewBuildUp<IUnityContainer>()
+                ?? ((IUnityContainer)context
+                    .NewBuildUp(typeof(IUnityContainer), null))
                     .Resolve(typeToResolve);
-        }
 
         public static BuildUpData GetBuildUpData(this IBuilderContext context, Type registeredType, string name, Type[] argumentTypes)
         {
@@ -66,13 +64,12 @@ namespace UnityInjectionLookup
                 .ToDictionary(x => x.Types, x => x.Data, new TypeArrayEqualityComparer());
         }
 
-        public static IEnumerable<ContainerRegistration> GetRegistrations(this IBuilderContext context,
-            Type registeredType, string name)
-        {
-            return context.NewBuildUp<IUnityContainer>().Registrations
+        public static IEnumerable<IContainerRegistration> GetRegistrations(this IBuilderContext context,
+            Type registeredType, string name) =>
+            ((IUnityContainer)context
+                    .NewBuildUp(typeof(IUnityContainer), null)).Registrations
                 .Where(registration => registration.RegisteredType == registeredType &&
                                        !(registration.LifetimeManager is ContainerControlledLifetimeManager) &&
                                        registration.Name != name);
-        }
     }
 }

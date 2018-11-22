@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
+using Unity.Builder;
+using Unity.Resolution;
 
 namespace UnityInjectionLookup
 {
-    class BuildUpData
+    internal class BuildUpData
     {
         private readonly IList<string> parameterNames;
 

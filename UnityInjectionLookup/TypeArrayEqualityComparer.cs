@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace UnityInjectionLookup
 {
-    class TypeArrayEqualityComparer : IEqualityComparer<Type[]>
+    internal class TypeArrayEqualityComparer : IEqualityComparer<Type[]>
     {
         public bool Equals(Type[] x, Type[] y)
         {

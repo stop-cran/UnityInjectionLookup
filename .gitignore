@@ -1,6 +1,6 @@
 */obj
 */bin
-/packages
-/TestResults
-/*.suo
-/.vs
+packages
+TestResults
+*.suo
+.vs

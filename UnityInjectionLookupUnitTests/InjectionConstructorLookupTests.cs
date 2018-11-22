@@ -1,30 +1,38 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Practices.Unity;
+﻿using NUnit.Framework;
+using Shouldly;
+using System;
+using Unity;
+using Unity.Resolution;
 using UnityInjectionLookup;
 
 namespace UnityInjectionLookupUnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class UnitTest1
     {
         private interface IConfig { }
 
         private class ConfigA : IConfig { }
+
         private class ConfigB : IConfig { }
 
         private interface IReport { }
 
         private class ReportA : IReport
         {
-            public ReportA(ConfigA config) { }
-        }
-        private class ReportB : IReport
-        {
-            public ReportB(ConfigB config) { }
+            public ReportA(ConfigA config)
+            {
+            }
         }
 
-        [TestMethod]
+        private class ReportB : IReport
+        {
+            public ReportB(ConfigB config)
+            {
+            }
+        }
+
+        [Test]
         public void TestFactory()
         {
             var container = new UnityContainer();
@@ -37,11 +45,11 @@ namespace UnityInjectionLookupUnitTests
 
             var factory = container.Resolve<Func<IConfig, IReport>>("Select");
 
-            Assert.IsInstanceOfType(factory(new ConfigA()), typeof(ReportA));
-            Assert.IsInstanceOfType(factory(new ConfigB()), typeof(ReportB));
+            factory(new ConfigA()).ShouldBeOfType<ReportA>();
+            factory(new ConfigB()).ShouldBeOfType<ReportB>();
         }
 
-        [TestMethod]
+        [Test]
         public void TestDefaultConfigResolve()
         {
             var container = new UnityContainer();
@@ -51,10 +59,10 @@ namespace UnityInjectionLookupUnitTests
             container.RegisterType<IReport, ReportB>("B");
             container.RegisterType<IReport>("Select", new InjectionConstructorLookup<IConfig>());
 
-            Assert.IsInstanceOfType(container.Resolve<IReport>("Select"), typeof(ReportB));
+            container.Resolve<IReport>("Select").ShouldBeOfType<ReportB>();
         }
 
-        [TestMethod]
+        [Test]
         public void TestOverriddenResolve()
         {
             var container = new UnityContainer();
@@ -63,7 +71,8 @@ namespace UnityInjectionLookupUnitTests
             container.RegisterType<IReport, ReportB>("B");
             container.RegisterType<IReport>("Select", new InjectionConstructorLookup<IConfig>());
 
-            Assert.IsInstanceOfType(container.Resolve<IReport>("Select", new DependencyOverride<IConfig>(new ConfigB())), typeof(ReportB));
+            container.Resolve<IReport>("Select", new DependencyOverride<IConfig>(new ConfigB()))
+                .ShouldBeOfType<ReportB>();
         }
     }
 }

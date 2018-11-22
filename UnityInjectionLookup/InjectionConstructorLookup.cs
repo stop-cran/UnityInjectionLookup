@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Utility;
+using Unity.Builder;
+using Unity.Policy;
+using Unity.Registration;
 
 namespace UnityInjectionLookup
 {
@@ -14,13 +14,15 @@ namespace UnityInjectionLookup
 
         public InjectionConstructorLookup(IEnumerable<Type> argumentTypes)
         {
-            Guard.ArgumentNotNull(argumentTypes, "argumentTypes");
-            this.argumentTypes = new ReadOnlyCollection<Type>(argumentTypes.ToList());
+            this.argumentTypes = new ReadOnlyCollection<Type>((argumentTypes
+                ?? throw new ArgumentNullException(nameof(argumentTypes))).ToList());
         }
 
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
-            var factoryPolicy = new ConstructorLookupFactoryBuildPlanPolicy(argumentTypes, implementationType);
+            var factoryPolicy = new ConstructorLookupFactoryBuildPlanPolicy(
+                argumentTypes ?? throw new ArgumentNullException(nameof(argumentTypes)),
+                implementationType ?? throw new ArgumentNullException(nameof(implementationType)));
 
             policies.Set<IBuildPlanPolicy>(new ConstructorLookupBuildPlanPolicy(argumentTypes),
                 new NamedTypeBuildKey(implementationType, name));
@@ -28,15 +30,17 @@ namespace UnityInjectionLookup
         }
     }
 
-
     public class InjectionConstructorLookup<T> : InjectionConstructorLookup
     {
-        public InjectionConstructorLookup() : base(new[] { typeof(T) }) { }
+        public InjectionConstructorLookup() : base(new[] { typeof(T) })
+        {
+        }
     }
-
 
     public class InjectionConstructorLookup<T1, T2> : InjectionConstructorLookup
     {
-        public InjectionConstructorLookup() : base(new[] { typeof(T1), typeof(T2) }) { }
+        public InjectionConstructorLookup() : base(new[] { typeof(T1), typeof(T2) })
+        {
+        }
     }
 }

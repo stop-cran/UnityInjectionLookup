@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.Practices.Unity.Utility;
 
 namespace UnityInjectionLookup
 {
@@ -25,33 +24,27 @@ namespace UnityInjectionLookup
             }
         }
 
-
         public static Delegate MakeTyped(Func<object[], object> function, IEnumerable<Type> parameterTypes, Type resultType)
         {
-            Guard.ArgumentNotNull(function, "function");
-            Guard.ArgumentNotNull(parameterTypes, "parameterTypes");
-            Guard.ArgumentNotNull(resultType, "resultType");
-
-            var parameters = parameterTypes.Select(Expression.Parameter).ToList();
+            var parameters = (parameterTypes ?? throw new ArgumentNullException(nameof(parameterTypes)))
+                .Select(Expression.Parameter).ToList();
 
             return Expression.Lambda(
                     Expression.Convert(
-                    function.Target == null
+                    (function ?? throw new ArgumentNullException(nameof(function))).Target == null
                         ? Expression.Call(function.Method, ToObjectArray(parameters))
                         : Expression.Call(
                             Expression.Constant(function.Target),
                             function.Method,
                             ToObjectArray(parameters)),
-                        resultType),
+                        resultType ?? throw new ArgumentNullException(nameof(resultType))),
                     function.Method.Name + "_Typed",
                     parameters)
                 .Compile();
         }
 
-        static NewArrayExpression ToObjectArray(IEnumerable<Expression> values)
-        {
-            return Expression.NewArrayInit(typeof(object),
+        private static NewArrayExpression ToObjectArray(IEnumerable<Expression> values) =>
+            Expression.NewArrayInit(typeof(object),
                 values.Select(parameter => Expression.Convert(parameter, typeof(object))));
-        }
     }
 }
