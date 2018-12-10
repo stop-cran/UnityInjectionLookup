@@ -5,7 +5,7 @@ using Unity;
 using Unity.Resolution;
 using UnityInjectionLookup;
 
-namespace UnityInjectionLookupUnitTests
+namespace UnityInjectionLookup.Tests
 {
     [TestFixture]
     public class UnitTest1

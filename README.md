@@ -1,10 +1,10 @@
-# Overview
+# Overview [![NuGet](https://img.shields.io/nuget/v/UnityInjectionLookup.svg)](https://www.nuget.org/packages/UnityInjectionLookup) [![Build Status](https://travis-ci.com/stop-cran/UnityInjectionLookup.svg?branch=master)](https://travis-ci.com/stop-cran/UnityInjectionLookup)
 
 The package defines a custom `InjectionMember` of [Unity Container](https://github.com/unitycontainer/unity) - `InjectionConstructorLookup`. It resolves a provided type between several inheritors of some basis type, depending on their constructor parameter signatures.
 
 Each inheritor should have a constructor with a certain signature - each parameter should be inherited from a type passed to constructor of `InjectionConstructorLookup`.
 
-# Installation [![NuGet](https://img.shields.io/nuget/v/UnityInjectionLookup.svg)](https://www.nuget.org/packages/UnityInjectionLookup)
+# Installation
 
 NuGet package is available [here](https://www.nuget.org/packages/UnityInjectionLookup/).
 

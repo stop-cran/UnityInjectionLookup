@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnityInjectionLookup", "UnityInjectionLookup\UnityInjectionLookup.csproj", "{D05CCA74-31F4-4EA3-8D56-6F09D59814ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnityInjectionLookupUnitTests", "UnityInjectionLookupUnitTests\UnityInjectionLookupUnitTests.csproj", "{446871F3-EEAE-43C0-8BDF-5A1FF3BEAD68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnityInjectionLookup.Tests", "UnityInjectionLookup.Tests\UnityInjectionLookup.Tests.csproj", "{446871F3-EEAE-43C0-8BDF-5A1FF3BEAD68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

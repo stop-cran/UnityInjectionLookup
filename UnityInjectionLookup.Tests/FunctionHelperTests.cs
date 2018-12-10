@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace UnityInjectionLookupUnitTests
+namespace UnityInjectionLookup.Tests
 {
     [TestFixture]
     public class FunctionHelperTests
